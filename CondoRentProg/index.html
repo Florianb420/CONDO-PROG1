@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Condo Reservation Calendar</title>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+    <div class="container">
+        <div id="calendar"></div>
+
+        <div id="reservation-form">
+            <h2>Add a Reservation</h2>
+            <form id="addReservation">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label for="condo">Condo:</label>
+                        <select id="condo" name="condo" class="form-control">
+                            <option value="528">Condo 528</option>
+                            <option value="527">Condo 527</option>
+                        </select>
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="price">Price:</label>
+                        <input type="number" id="price" name="price" class="form-control" placeholder="Enter price">
+                    </div>
+                </div>
+                
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label for="start-date">Start Date:</label>
+                        <input type="date" id="start-date" name="start-date" class="form-control">
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="end-date">End Date:</label>
+                        <input type="date" id="end-date" name="end-date" class="form-control">
+                    </div>
+                </div>
+        
+                <button type="submit" class="btn btn-primary">Add Reservation</button>
+            </form>
+
+            <h3>Reservations List</h3>
+            <ul id="reservation-list" class="reservation-list">
+                <!-- Reservation entries will be dynamically added here -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- FullCalendar JS -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
+    <script src="script/script.js"></script>
+</body>
+</html>
