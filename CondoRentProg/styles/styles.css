@@ -1,0 +1,143 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+#calendar {
+    max-width: 70%; /* Increased width to take more space */
+    flex-grow: 1; /* Ensures the calendar will grow to fill available space */
+}
+
+#reservation-form {
+    max-width: 25%; /* Reduced width of the form to make more space for the calendar */
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#reservation-form h2, #reservation-form h3 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.reservation-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.reservation-list li {
+    padding: 10px;
+    background-color: #f4f4f4;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.reservation-list li.highlight {
+    background-color: yellow;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+
+/* Media query for phones and smaller devices */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #calendar, #reservation-form {
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+
+    #calendar {
+        order: 1;
+    }
+
+    #reservation-form {
+        order: 2;
+        padding: 15px;
+    }
+
+    .form-control {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .btn {
+        padding: 12px;
+        font-size: 18px;
+    }
+
+    /* Stack the form fields side by side */
+    .form-inline {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .form-inline .form-group {
+        flex: 1;
+    }
+}
+
+/* Extra small screen optimization (phones less than 400px width) */
+@media (max-width: 400px) {
+    body {
+        padding: 5px;
+    }
+
+    h2 {
+        font-size: 16px;
+    }
+
+    .btn {
+        padding: 10px;
+        font-size: 16px;
+    }
+}
