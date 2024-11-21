@@ -1,36 +1,5 @@
-document.addEventListener('DOMContentLoaded', function () {
-    var calendarEl = document.getElementById('calendar');
-    var condo528ListEl = document.createElement('ul');
-    var condo527ListEl = document.createElement('ul');
-    var condo528TotalEl = document.createElement('div');
-    var condo527TotalEl = document.createElement('div');
-    var condo528PaidTotalEl = document.createElement('div');
-    var condo527PaidTotalEl = document.createElement('div');
-
-    condo528ListEl.classList.add('reservation-list');
-    condo527ListEl.classList.add('reservation-list');
-
-    document.getElementById('reservation-list').appendChild(document.createElement('h3')).textContent = "Condo 528 Reservations";
-    document.getElementById('reservation-list').appendChild(condo528ListEl);
-    document.getElementById('reservation-list').appendChild(condo528TotalEl);
-    document.getElementById('reservation-list').appendChild(condo528PaidTotalEl);
-
-    document.getElementById('reservation-list').appendChild(document.createElement('h3')).textContent = "Condo 527 Reservations";
-    document.getElementById('reservation-list').appendChild(condo527ListEl);
-    document.getElementById('reservation-list').appendChild(condo527TotalEl);
-    document.getElementById('reservation-list').appendChild(condo527PaidTotalEl);
-
-    var reservationsRef = firebase.database().ref('reservations');
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        selectable: true,
-        events: [],
-        eventClick: function (info) {
-            highlightReservation(info.event.id);
-        }
-    });
-    calendar.render();
-
+// Load reservations after user is logged in
+function loadReservations() {
     reservationsRef.on('value', function (snapshot) {
         const reservations = snapshot.val();
         condo528ListEl.innerHTML = '';
@@ -74,6 +43,87 @@ document.addEventListener('DOMContentLoaded', function () {
         condo527TotalEl.textContent = `Total for Condo 527: ${total527} THB`;
         condo527PaidTotalEl.textContent = `Total Paid for Condo 527: ${paidTotal527} THB`;
     });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            // User is logged in, show app content
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('app-content').style.display = 'block';
+    
+            // Load reservations for the user
+            loadReservations();
+        } else {
+            // User is not logged in, show login form
+            document.getElementById('login-form').style.display = 'block';
+            document.getElementById('app-content').style.display = 'none';
+        }
+    });
+
+    // Logout functionality
+    document.getElementById('logout-btn').addEventListener('click', function () {
+        auth.signOut()
+            .then(() => {
+                alert('Logged out!');
+            })
+            .catch(error => {
+                alert('Logout failed: ' + error.message);
+            });
+    });
+
+    // Login functionality
+    document.querySelector('#login-form form').addEventListener('submit', function (e) {
+        e.preventDefault(); // Prevent default form submission
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        auth.signInWithEmailAndPassword(email, password)
+            .then(() => {
+                alert('Logged in successfully!');
+            })
+            .catch(error => {
+                alert('Login failed: ' + error.message);
+            });
+    });
+    
+    // Initialize variables for DOM elements
+    var calendarEl = document.getElementById('calendar');
+    var condo528ListEl = document.createElement('ul');
+    var condo527ListEl = document.createElement('ul');
+    var condo528TotalEl = document.createElement('div');
+    var condo527TotalEl = document.createElement('div');
+    var condo528PaidTotalEl = document.createElement('div');
+    var condo527PaidTotalEl = document.createElement('div');
+
+    condo528ListEl.classList.add('reservation-list');
+    condo527ListEl.classList.add('reservation-list');
+
+    document.getElementById('reservation-list').appendChild(document.createElement('h3')).textContent = "Condo 528 Reservations";
+    document.getElementById('reservation-list').appendChild(condo528ListEl);
+    document.getElementById('reservation-list').appendChild(condo528TotalEl);
+    document.getElementById('reservation-list').appendChild(condo528PaidTotalEl);
+
+    document.getElementById('reservation-list').appendChild(document.createElement('h3')).textContent = "Condo 527 Reservations";
+    document.getElementById('reservation-list').appendChild(condo527ListEl);
+    document.getElementById('reservation-list').appendChild(condo527TotalEl);
+    document.getElementById('reservation-list').appendChild(condo527PaidTotalEl);
+
+    // Reference to Firebase Database
+    var reservationsRef = firebase.database().ref('reservations');
+
+    // Initialize the calendar
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        selectable: true,
+        events: [],
+        eventClick: function (info) {
+            highlightReservation(info.event.id);
+        }
+    });
+    calendar.render();
+});
 
     document.getElementById('addReservation').addEventListener('submit', function (e) {
         e.preventDefault();
@@ -169,4 +219,4 @@ document.addEventListener('DOMContentLoaded', function () {
             condo527PaidTotalEl.textContent = `Total Paid for Condo 527: ${paidTotal527} THB`;
         });
     }
-});
+
