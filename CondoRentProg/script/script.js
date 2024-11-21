@@ -14,6 +14,7 @@ function loadReservations() {
         if (reservations) {
             Object.keys(reservations).forEach(function (id) {
                 const reservation = reservations[id];
+                console.log(reservation); // Add this for debugging
                 const price = parseFloat(reservation.price) || 0;
 
                 if (reservation.condo === '528') {
